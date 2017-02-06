@@ -1,5 +1,6 @@
 from flask import Flask
-import patient
+from patient import *
+import os
 
 # print a nice greeting.
 def say_hello(username = "World"):
@@ -16,7 +17,7 @@ home_link = '<p><a href="/">Back</a></p>\n'
 footer_text = '</body>\n</html>'
 
 # EB looks for an 'application' callable by default.
-application = Flask(__name__)
+application = Flask(__name__, template_folder='templates')
 
 # add a rule for the index page.
 application.add_url_rule('/', 'index', (lambda: header_text +
@@ -28,7 +29,9 @@ application.add_url_rule('/<username>', 'hello', (lambda username:
     header_text + say_hello(username) + home_link + footer_text))
 
 # add a rule for the patient page
-application.add_url_rule('/patient/<id>', 'patient', (lambda id: id))
+application.add_url_rule('/patient/<id>', 'patient_route', patient_route)
+
+#application.register_blueprint(patient)
 
 # run the app.
 if __name__ == "__main__":
