@@ -1,4 +1,5 @@
 from flask import Flask
+import patient
 
 # print a nice greeting.
 def say_hello(username = "World"):
@@ -25,6 +26,9 @@ application.add_url_rule('/', 'index', (lambda: header_text +
 # URL.
 application.add_url_rule('/<username>', 'hello', (lambda username:
     header_text + say_hello(username) + home_link + footer_text))
+
+# add a rule for the patient page
+application.add_url_rule('/patient/<id>', 'patient', (lambda id: id))
 
 # run the app.
 if __name__ == "__main__":
