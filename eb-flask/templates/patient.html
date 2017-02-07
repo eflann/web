@@ -1,6 +1,29 @@
 {% extends "base.html" %} 
 {% block content %}
        
-    <h1>Patient Data for Patient ID={{id}}</h1>
+    <h1>Patient Data for Patient {{id}}</h1>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="http://i.imgur.com/WqGK9bT.png" class="img-responsive" alt="placeholder image of a human body">
+        </div>
+        <div class="col-md-4">
+         
+          <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd>Dave</dd>
+            <dt>Last Initial</dt>
+            <dd>C</dd>
+            <dt>DOB</dt>
+            <dd>1/1/2000</dd>
+        </dl>
+
+        <h2>Symptoms</h2>
+        <p>Symptom description goes here</p>
+
+        </div>
+      </div>
+    </div>
 
 {% endblock %}
