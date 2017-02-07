@@ -7,4 +7,6 @@ patient = Blueprint('patient', __name__, template_folder='templates')
 def patient_route(id):
     #pat_id = request.args.get('id')
     print id
-    return render_template("patient.html", thisvar=id)
+
+    options = {"id": id}
+    return render_template("patient.html", **options)
