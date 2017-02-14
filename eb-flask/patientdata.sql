@@ -1,8 +1,9 @@
 CREATE TABLE Patient
 (
-    id int IDENTITY(1,1) PRIMARY KEY,
-	firstname  VARCHAR(20),         
-	lastinit  VARCHAR(20)      
+    id int NOT NULL AUTO_INCREMENT,
+    firstname  varchar(20),         
+    lastinit  varchar(2),
+    PRIMARY KEY (ID)
 );
 
 INSERT INTO Patient (firstname, lastinit) VALUES (Sonya, K);

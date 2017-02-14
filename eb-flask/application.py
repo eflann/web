@@ -1,5 +1,6 @@
 from flask import Flask
 from patient import *
+import mysql
 import os
 
 # print a nice greeting.
@@ -18,6 +19,12 @@ footer_text = '</body>\n</html>'
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__, template_folder='templates')
+
+# Initialize MySQL database connector
+application.config['MYSQL_USER'] = 'root'
+application.config['MYSQL_PASSWORD'] = 'chesney'
+application.config['MYSQL_DB'] = 'test'
+#mysql.init_app(application)
 
 # add a rule for the index page.
 application.add_url_rule('/', 'index', (lambda: header_text +
