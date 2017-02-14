@@ -5,8 +5,6 @@ patient = Blueprint('patient', __name__, template_folder='templates')
 @patient.route('/patient/<id>', methods=['GET','POST'])
 def patient_route(id):
 
-    print id
-
     cnx = connector.connect(user='root', password='chesney',
                               host='localhost',
                               database='test')
@@ -15,9 +13,18 @@ def patient_route(id):
     # data on patient with specified id
     cur.execute('SELECT * FROM test.patient WHERE id="%s" ' % (id))
     patient = cur.fetchall()
-    print patient
+   
+    
+    patientdata = str(patient).split('\'')
 
-    options = {"id": id}
-    options[name] = patient[1]
-    options[lastinit] = patient[2]
+    options = {}
+
+    if len(patient) == 0:
+    	options["exists"] = False
+    else:
+    	options["id"] = id
+    	options["exists"] = True
+    	options["name"] = patientdata[1]
+    	options["lastinit"] = patientdata[3]
+
     return render_template("patient.html", **options)
