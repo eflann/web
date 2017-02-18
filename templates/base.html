@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title> Physician Portal </title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <ul>
+    <li><h4 class="webname"> Physician Portal </h4></li>
+    <li><a href="{{ url_for('main.main_route') }}" class="indices">Home</a></li>
+    <li><a href="{{ url_for('main.about_route') }}" class="indices">About</a></li>
+    {% if 'firstname' in session %}
+    <li><a href="{{ url_for('main.logout_route') }}" class="indices">Logout</a></li>
+    {% endif %}
+  </ul>
+  <!-- Tool bar for logged in -->
+    {% if 'firstname' in session %}
+    <div class="user_info">
+        <p>Logged in as {{ session['firstname'] }} {{ session['lastname'] }}</p>
+    </div>
+    {% endif %}
+
+    {% block content %} {% endblock %}
+    <footer class="foot"> A website developed for EECS 481 W17 Mindfulness project </footer>
+  </body>
+
+</html>  
