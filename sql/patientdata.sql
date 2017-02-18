@@ -1,3 +1,6 @@
+DROP TABLE Patient;
+DROP TABLE Doctor;
+
 CREATE TABLE Patient
 (
     id int NOT NULL AUTO_INCREMENT,

@@ -23,15 +23,26 @@ def get_user_info(email):
     results = cur.fetchall()
     return results
 
-@main.route('/')
+def get_patient_results(firstname, lastinit):
+    cur = db.cursor()
+    query = "SELECT * FROM Patient WHERE firstname=\"{}\" AND lastinit=\"{}\"".format(firstname, lastinit)
+    cur.execute(query)
+    results = cur.fetchall()
+    return results
+
+@main.route('/', methods=['GET', 'POST'])
 def main_route():
-    # Function to fill out options for getting all user info 
-    print("in home route")
-    if 'firstname' in session: 
-        return render_template("index.html")
+    if request.method == "POST":
+        patient_firstname = request.form.get("firstname")
+        patient_lastinit = request.form.get("lastinit")
+        results = get_patient_results(patient_firstname, patient_lastinit)
+        return render_template("results.html", results=results)
     else:
-        print("redirect")
-        return redirect('/login')
+        if 'firstname' in session: 
+            return render_template("index.html")
+        else:
+            print("redirect")
+            return redirect('/login')
 
 @main.route('/login', methods=['GET', 'POST'])
 def login_route():
@@ -59,4 +70,8 @@ def logout_route():
 @main.route('/about')
 def about_route():
     return render_template("about.html")
+
+@main.route('/result/<patient_id>')
+def result_route(patient_id):
+    return render_template("data.html")
     
