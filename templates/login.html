@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+    
+<h3 class="home"> Login </h3>
+
+    <!-- Form for searching patient -->
+    <div>
+    {% if errors %}
+    <p class="error">
+        {{ errors[0] }}
+    </p>
+    {% endif %}
+    <p class="instruct">
+        Enter your credentials to access patient information
+    </p>
+
+    <form action="{{ url_for('main.login_route') }}" method="POST" enctype="multipart/form-data">
+        <label for="fname" class="text_fields">Email</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="lname" class="text_fields">Password</label>
+        <input type="password" id="pword" name="pword">
+        <br>
+        <input type="submit" value="Log In" class="text_fields">
+    </form>
+</div>
+
+{% endblock %}

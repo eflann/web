@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+    
+<h3 class="home"> Patient Search Results </h3>
+
+{% for result in results %}
+<a class="instruct" href="{{ url_for('main.result_route', patient_id=result['id']) }}">{{ result['firstname'] }} {{ result['lastinit'] }} </a>
+{% endfor %}
+
+{% endblock %}
