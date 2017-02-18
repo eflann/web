@@ -13,7 +13,7 @@ DROP TABLE DataPoints;
 DROP TABLE Sensations;
 DROP TABLE Symptoms;
 DROP TABLE Patient;
-
+s
 CREATE TABLE Patient
 (
     id int NOT NULL AUTO_INCREMENT,
