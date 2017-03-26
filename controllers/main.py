@@ -88,6 +88,6 @@ def result_route():
 @main.route('/patient-view')
 def patient_view_route():
     # TODO: change path once deployed
-    filename = "file://" + "/Users/annadodd/481Mindfulness/app_dressed/static/unity/web_in_test/build_test/index.html"
+    filename = "http://localhost:5000" + "/static/unity/web_in_test/build_test/index.html"
     webbrowser.open(filename, new=0, autoraise=True)
     return "good"
