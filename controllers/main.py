@@ -83,6 +83,8 @@ def result_route(patient_id):
 def result_route():
     print("api called!")
     #TODO: grab json and fill into DB
+    incoming_json = request.get_json(silent=True)
+    print(incoming_json)
     return "good"
 
 @main.route('/patient-view')
