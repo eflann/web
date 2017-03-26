@@ -1,13 +1,10 @@
-DROP TABLE Patient;
-DROP TABLE Doctor;
+-- password for my instance of mysql is chesney'
 
-CREATE TABLE Patient
-(
-    id int NOT NULL AUTO_INCREMENT,
-    firstname  varchar(20),         
-    lastinit  varchar(2),
-    PRIMARY KEY (ID)
-);
+USE mindfuldb;
+
+DROP TABLE Doctor;
+DROP TABLE Symptoms;
+DROP TABLE Patient;
 
 CREATE TABLE Doctor (
     id int NOT NULL AUTO_INCREMENT,
@@ -18,11 +15,34 @@ CREATE TABLE Doctor (
     PRIMARY KEY(ID)
 );
 
-INSERT INTO Patient (firstname, lastinit) VALUES ("Sonya", "K");
-INSERT INTO Patient (firstname, lastinit) VALUES ("Anna", "D");
-INSERT INTO Patient (firstname, lastinit) VALUES ("Erin", "F");
-INSERT INTO Patient (firstname, lastinit) VALUES ("Kelly", "H");
-INSERT INTO Patient (firstname, lastinit) VALUES ("Dave", "C");
-INSERT INTO Patient (firstname, lastinit) VALUES ("John", "M");
+CREATE TABLE Patient
+(
+    id int NOT NULL AUTO_INCREMENT,
+    firstname  varchar(20),         
+    lastinit  varchar(2),
+    dobMonth int,
+    dobDay int,
+    dobYear int,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Symptoms
+(
+    patientID int NOT NULL,
+    description varchar(120),
+    severityLevel int,
+    PRIMARY KEY (patientID)
+);
+
+
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Sonya", "K", 5, 5, 1992);
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Anna", "D", 5, 5, 1992);
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Erin", "F", 5, 5, 1992);
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Kelly", "H", 5, 5, 1992);
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Dave", "C", 5, 5, 1992);
+INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("John", "M", 5, 5, 1992);
 
 INSERT INTO Doctor (firstname, lastname, email, password) VALUES ("Anna", "Dodd", "annadodd@umich.edu", "rootroot");
+
+
+

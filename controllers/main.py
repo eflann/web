@@ -85,6 +85,29 @@ def result_route():
     #TODO: grab json and fill into DB
     incoming_json = request.get_json(silent=True)
     print(incoming_json)
+
+    cur = db.cursor()
+    # submit patient to table
+    firstname = incoming_json['first']
+    lastinit = incoming_json['last']
+    dobMonth = incoming_json['dobMonth']
+    dobDay = incoming_json['dobDay']
+    dobYear = incoming_json['dobYear']
+    patient_query = "INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES \
+    (\"{}\", \"{}\", {}, {}, {});".format(firstname, lastinit, dobMonth, dobDay, dobYear)
+    cur.execute(patient_query)
+    # get patient id
+    id_query = "SELECT id FROM Patient WHERE firstname=\"{}\" AND lastinit=\"{}\"".format(firstname, lastinit)
+    cur.execute(id_query)
+    id_result = cur.fetchall()
+    patient_id = id_result[0]['id']
+    # enter in symptoms for patient
+    for s in incoming_json['symptoms']:
+        description = s['description']
+        severityLevel = s['severityLevel']
+        symptom_query = "INSERT INTO Symptoms (patientID, description, severityLevel) VALUES \
+        ({}, \"{}\", {})".format(patient_id, description, severityLevel)
+        cur.execute(symptom_query)
     return "good"
 
 @main.route('/patient-view')
@@ -93,4 +116,4 @@ def patient_view_route():
     host = "http://localhost:5000"
     filename =  host + "/static/unity/web_in_test/build_test/index.html"
     webbrowser.open(filename, new=0, autoraise=True)
-    return "good"
+    return "Rerouting you to the patient portal..."
