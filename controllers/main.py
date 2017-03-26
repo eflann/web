@@ -72,17 +72,31 @@ def logout_route():
 def about_route():
     return render_template("about.html")
 
-'''
 @main.route('/result/<patient_id>')
 def result_route(patient_id):
-    return render_template("data.html")
-'''
+    # shouldn't be able to get result if not logged in
+    if 'firstname' not in session:
+        return redirect('/login')
+    data = {}
+    cur = db.cursor()
+    patient_query = "SELECT * FROM Patient WHERE id={}".format(int(patient_id))
+    cur.execute(patient_query)
+    patient_result = cur.fetchall()
+    if not patient_result:
+        # not found; maybe update this later to be more clear, using error handling
+        return redirect('/')
+    data['patient_info'] = patient_result[0]
+    symptom_query = "SELECT * FROM Symptoms WHERE patientID={}".format(int(patient_id))
+    cur.execute(symptom_query)
+    symptom_results = cur.fetchall()
+    data['symptoms'] = symptom_results
+    print(data)
+    return render_template("data.html", data=data)
     
 # call to api to add patient; called from unity app
 @main.route('/api/add-patient', methods=['POST'])
-def result_route():
+def add_patient_route():
     print("api called!")
-    #TODO: grab json and fill into DB
     incoming_json = request.get_json(silent=True)
     print(incoming_json)
 

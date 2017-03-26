@@ -6,4 +6,18 @@ Patient Data
     
 <h3 class="home"> Patient Data </h3>
 
+<h4 class="instruct"> Date of Birth: {{ data['patient_info']['dobMonth'] }}-{{ data['patient_info']['dobDay'] }}-{{ data['patient_info']['dobYear'] }}</h4>
+
+<h4 class="instruct"> Symptoms: </h4>
+<br>
+<form action="" method="POST" enctype="multipart/form-data" align="center">
+{% for symptom in data['symptoms'] %}
+    <label for="sym" class="text_fields">{{ symptom['description'] }}</label>
+    <input type="text" id="sym" value="{{ symptom['severityLevel'] }}">
+    <br>
+{% endfor %}
+<input type="submit" value="Save Changes" class="text_fields">
+</form>
+<!-- todo: add symptom form -->
+
 {% endblock %}

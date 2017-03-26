@@ -34,6 +34,11 @@ CREATE TABLE Symptoms
     PRIMARY KEY (patientID)
 );
 
+ALTER TABLE Symptoms
+ADD FOREIGN KEY fk_id(patientID)
+REFERENCES Patient(id)
+ON DELETE CASCADE
+ON UPDATE RESTRICT;
 
 INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Sonya", "K", 5, 5, 1992);
 INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES ("Anna", "D", 5, 5, 1992);
