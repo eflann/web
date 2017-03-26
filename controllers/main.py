@@ -1,4 +1,5 @@
 from flask import *
+import webbrowser
 
 from extensions import connect_to_database, get_db
 
@@ -71,7 +72,22 @@ def logout_route():
 def about_route():
     return render_template("about.html")
 
+'''
 @main.route('/result/<patient_id>')
 def result_route(patient_id):
     return render_template("data.html")
+'''
     
+# call to api to add patient; called from unity app
+@main.route('/api/add-patient', methods=['POST'])
+def result_route():
+    print("api called!")
+    #TODO: grab json and fill into DB
+    return "good"
+
+@main.route('/patient-view')
+def patient_view_route():
+    # TODO: change path once deployed
+    filename = "file://" + "/Users/annadodd/481Mindfulness/app_dressed/static/unity/web_in_test/build_test/index.html"
+    webbrowser.open(filename, new=0, autoraise=True)
+    return "good"
