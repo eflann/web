@@ -72,9 +72,15 @@ def logout_route():
 def about_route():
     return render_template("about.html")
 
-@main.route('/result/<patient_id>')
+@main.route('/result/<patient_id>', methods=['GET', 'POST'])
 def result_route(patient_id):
     # shouldn't be able to get result if not logged in
+    if request.method == "POST":
+        print("post request")
+        for k in request.form:
+            print(k)
+
+        # iterate through values from forms, update them in Symptoms table 
     if 'firstname' not in session:
         return redirect('/login')
     data = {}
@@ -90,7 +96,7 @@ def result_route(patient_id):
     cur.execute(symptom_query)
     symptom_results = cur.fetchall()
     data['symptoms'] = symptom_results
-    print(data)
+    #print(data)
     return render_template("data.html", data=data)
     
 # call to api to add patient; called from unity app

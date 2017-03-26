@@ -10,10 +10,10 @@ Patient Data
 
 <h4 class="instruct"> Symptoms: </h4>
 <br>
-<form action="" method="POST" enctype="multipart/form-data" align="center">
+<form action="{{ url_for('main.result_route', patient_id=data['patient_info']['id']) }}" method="POST" enctype="multipart/form-data" align="center">
 {% for symptom in data['symptoms'] %}
     <label for="sym" class="text_fields">{{ symptom['description'] }}</label>
-    <input type="text" id="sym" value="{{ symptom['severityLevel'] }}">
+    <input type="text" id="sym" name="{{ symptom['description'] }}" value="{{ symptom['severityLevel'] }}">
     <br>
 {% endfor %}
 <input type="submit" value="Save Changes" class="text_fields">
