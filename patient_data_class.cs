@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+// Structure to store all patient data entered
+// Whenever a patient updates symptom information in the hololens app, 
+// add symptom to reflect this. Allows easy port from C# to JS with 
+// JSON formatting 
 public struct PatientData 
 {
     private string firstName;
@@ -53,19 +57,17 @@ public struct PatientData
     }       
 }
 
+// Example of using patient data
 namespace Rextester
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            //Your code goes here
-            Console.WriteLine("Hello, world!");
             var data = new PatientData("Tom", 'F', 5, 5, 1992);
-            data.addSymptom("itchy", 5);
-            data.addSymptom("itchy", 1);
+            data.addSymptom("Dry cough", 5);
+            data.addSymptom("Soar throat", 1);
             Console.WriteLine(data.exportAsJSON());
-            
         }
     }
 }

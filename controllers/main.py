@@ -75,16 +75,18 @@ def about_route():
 @main.route('/result/<patient_id>', methods=['GET', 'POST'])
 def result_route(patient_id):
     # shouldn't be able to get result if not logged in
+    cur = db.cursor()
     if request.method == "POST":
-        print("post request")
-        for k in request.form:
-            print(k)
-
         # iterate through values from forms, update them in Symptoms table 
+        for k in request.form:
+            value = request.form[k]
+            update_level_query = "UPDATE Symptoms SET severityLevel={} WHERE patientID={} AND description=\"{}\"".format(value, patient_id, k)
+            cur.execute(update_level_query)
+        
     if 'firstname' not in session:
         return redirect('/login')
     data = {}
-    cur = db.cursor()
+    
     patient_query = "SELECT * FROM Patient WHERE id={}".format(int(patient_id))
     cur.execute(patient_query)
     patient_result = cur.fetchall()

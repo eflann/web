@@ -29,7 +29,7 @@ CREATE TABLE Patient
 CREATE TABLE Symptoms
 (
     patientID int NOT NULL,
-    description varchar(120),
+    description varchar(250),
     severityLevel int,
     PRIMARY KEY (patientID)
 );
