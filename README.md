@@ -1,3 +1,6 @@
+## Demo
+See demos/beta_demo.mov for a demo of the current state of our project!
+
 ## General
 * The controllers folder contains the code which generates dynamic web pages and the API that the patient-view route calls to submit to the database.
 * The database schema is initialized with sql/patientdata.sql
