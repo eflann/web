@@ -1,6 +1,7 @@
 ## General
 * The controllers folder contains the code which generates dynamic web pages and the API that the patient-view route calls to submit to the database.
-* We created our patient-view using Unity and then exported it as a WebGL project. The WebGL project is saved in the static folder and served when the patient navigates to /patient-view. 
+* The database schema is initialized with sql/patientdata.sql
+* We created our patient-view using Unity and then exported it as a WebGL project. The WebGL project build is saved in static/unity and served when the patient navigates to /patient-view. 
 * WebGL Documentation: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
 
 ## Endpoints
