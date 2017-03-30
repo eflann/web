@@ -30,8 +30,7 @@ CREATE TABLE Symptoms
 (
     patientID int NOT NULL,
     description varchar(250),
-    severityLevel int,
-    PRIMARY KEY (patientID)
+    severityLevel int
 );
 
 ALTER TABLE Symptoms

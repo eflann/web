@@ -109,12 +109,22 @@ def add_patient_route():
     print(incoming_json)
 
     cur = db.cursor()
+
     # submit patient to table
     firstname = incoming_json['first']
     lastinit = incoming_json['last']
     dobMonth = incoming_json['dobMonth']
     dobDay = incoming_json['dobDay']
     dobYear = incoming_json['dobYear']
+
+    # See if patient already exists
+    patient_results = get_patient_results(firstname, lastinit)
+
+    # Clear out existing patient data, refill
+    if len(patient_results) > 0:
+        delete_query = "DELETE FROM Patient WHERE firstname=\"{}\" and lastinit=\"{}\";".format(firstname, lastinit)
+        cur.execute(delete_query)
+
     patient_query = "INSERT INTO Patient (firstname, lastinit, dobMonth, dobDay, dobYear) VALUES \
     (\"{}\", \"{}\", {}, {}, {});".format(firstname, lastinit, dobMonth, dobDay, dobYear)
     cur.execute(patient_query)
@@ -136,6 +146,6 @@ def add_patient_route():
 def patient_view_route():
     # TODO: change host once deployed
     host = "http://localhost:5000"
-    filename =  host + "/static/unity/web_in_test/build_test/index.html"
+    filename =  host + "/static/unity/build/index.html"
     webbrowser.open(filename, new=0, autoraise=True)
     return "Rerouting you to the patient portal..."
