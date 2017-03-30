@@ -1,5 +1,3 @@
--- password for my instance of mysql is chesney'
-
 USE mindfuldb;
 
 DROP TABLE Doctor;

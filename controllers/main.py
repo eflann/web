@@ -7,6 +7,13 @@ main = Blueprint('main', __name__, template_folder='templates')
 
 db = get_db()
 
+'''
+This is the main class for the controllers of the dynamic web pages served 
+for clients of our Mindfulness project. It renders templates for various routes,
+as well as holds helper functions for accessing the database
+'''
+
+# Returns true if email/pword is a valid login; false otherwise
 def login_succeeds(email, pword):
     cur = db.cursor()
     query = "SELECT password FROM Doctor WHERE email=\"{}\"".format(email)
@@ -17,6 +24,7 @@ def login_succeeds(email, pword):
             return True
     return False
 
+# Returns user information by email for credentialed users 
 def get_user_info(email):
     cur = db.cursor()
     query = "SELECT firstname, lastname FROM Doctor WHERE email=\"{}\"".format(email)
@@ -24,6 +32,7 @@ def get_user_info(email):
     results = cur.fetchall()
     return results
 
+# Returns a list of patients that match with firstname, lastinit
 def get_patient_results(firstname, lastinit):
     cur = db.cursor()
     query = "SELECT * FROM Patient WHERE firstname=\"{}\" AND lastinit=\"{}\"".format(firstname, lastinit)
@@ -31,6 +40,8 @@ def get_patient_results(firstname, lastinit):
     results = cur.fetchall()
     return results
 
+# Handles GET and POST requests to the main route, directing logged in users to 
+# submit search queries and redirecting sessionless users to the login page
 @main.route('/', methods=['GET', 'POST'])
 def main_route():
     if request.method == "POST":
@@ -45,8 +56,12 @@ def main_route():
             print("redirect")
             return redirect('/login')
 
+# Login page allows user not in session to log in; redirects to home page if 
+# user is already logged in
 @main.route('/login', methods=['GET', 'POST'])
 def login_route():
+    if 'firstname' in session:
+        return redirect('/')
     if request.method == "POST":
         errors = []
         email = request.form.get("email")
@@ -61,6 +76,7 @@ def login_route():
             return redirect('/')
     return render_template("login.html")
 
+# Logs a user out
 @main.route('/logout')
 def logout_route():
     print("user logging out...")
@@ -68,10 +84,14 @@ def logout_route():
     session.pop('lastname', None)
     return redirect('/')
 
+# Returns HTML page with information about the site and creators
 @main.route('/about')
 def about_route():
     return render_template("about.html")
 
+# User can route to this page to access information directly on a specific patient
+# Reroutes the user to log in page if no session
+# Handles POST requests for user wishing to change the severity level of certain symptoms
 @main.route('/result/<patient_id>', methods=['GET', 'POST'])
 def result_route(patient_id):
     # shouldn't be able to get result if not logged in
@@ -101,7 +121,9 @@ def result_route(patient_id):
     #print(data)
     return render_template("data.html", data=data)
     
-# call to api to add patient; called from unity app
+# API to add a new patient into the database, along with the symptoms and severity level
+# Expects a JSON object sent along with POST request, parses this file and enters
+# into tables
 @main.route('/api/add-patient', methods=['POST'])
 def add_patient_route():
     print("api called!")
@@ -142,6 +164,9 @@ def add_patient_route():
         cur.execute(symptom_query)
     return "good"
 
+# Route which patients will access via the HoloLens browser app. We return a static file here
+# of the exported WebGL Unity application. The Unity application makes an AJAX POST request from 
+# the game scripts to our API in order to submit patient information 
 @main.route('/patient-view')
 def patient_view_route():
     # TODO: change host once deployed
