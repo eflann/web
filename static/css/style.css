@@ -57,6 +57,15 @@ li {
     color: #2B303A;
 }
 
+.webname2 {
+    display: block;
+    text-align: center;
+    padding: 70px 20px;
+    text-decoration: none;
+    color: #2B303A;
+}
+
+
 
 .indices {
     display: block;
@@ -68,6 +77,16 @@ li {
     font-family: Arial;
 }
 
+.indices2 {
+    display: block;
+    color: #2B303A;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: Arial;
+    background-color: #73b1ba;
+}
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {

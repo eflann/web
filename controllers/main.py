@@ -40,9 +40,13 @@ def get_patient_results(firstname, lastinit):
     results = cur.fetchall()
     return results
 
+@main.route('/', methods=['GET'])
+def home_route():
+    return render_template("home.html")
+
 # Handles GET and POST requests to the main route, directing logged in users to 
 # submit search queries and redirecting sessionless users to the login page
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/physician-view', methods=['GET', 'POST'])
 def main_route():
     if request.method == "POST":
         patient_firstname = request.form.get("firstname")
@@ -61,7 +65,7 @@ def main_route():
 @main.route('/login', methods=['GET', 'POST'])
 def login_route():
     if 'firstname' in session:
-        return redirect('/')
+        return redirect('/physician-view')
     if request.method == "POST":
         errors = []
         email = request.form.get("email")
@@ -73,7 +77,7 @@ def login_route():
             results = get_user_info(email)
             session['firstname'] = results[0]['firstname']
             session['lastname'] = results[0]['lastname']
-            return redirect('/')
+            return redirect('/physician-view')
     return render_template("login.html")
 
 # Logs a user out
@@ -82,7 +86,7 @@ def logout_route():
     print("user logging out...")
     session.pop('firstname', None)
     session.pop('lastname', None)
-    return redirect('/')
+    return redirect('/physician-view')
 
 # Returns HTML page with information about the site and creators
 @main.route('/about')
@@ -111,8 +115,9 @@ def result_route(patient_id):
     cur.execute(patient_query)
     patient_result = cur.fetchall()
     if not patient_result:
+        return abort(404)
         # not found; maybe update this later to be more clear, using error handling
-        return redirect('/')
+        #return redirect('/')
     data['patient_info'] = patient_result[0]
     symptom_query = "SELECT * FROM Symptoms WHERE patientID={}".format(int(patient_id))
     cur.execute(symptom_query)
