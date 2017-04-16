@@ -2,6 +2,7 @@
 See demos/beta_demo.mov for a demo of the current state of our project!
 
 ## General
+* To run locally, pip install -r requirements.txt, run python app.py (should run on localhost:5000)
 * The controllers folder contains the code which generates dynamic web pages and the API that the patient-view route calls to submit to the database.
 * The database schema is initialized with sql/patientdata.sql
 * We created our patient-view using Unity and then exported it as a WebGL project. The WebGL project build is saved in static/unity and served when the patient navigates to /patient-view. 
