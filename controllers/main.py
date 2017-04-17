@@ -175,7 +175,10 @@ def add_patient_route():
 @main.route('/patient-view')
 def patient_view_route():
     # TODO: change host once deployed
+    '''
     host = "http://localhost:5000"
     filename =  host + "/static/unity/build/index.html"
     webbrowser.open(filename, new=0, autoraise=True)
     return "Rerouting you to the patient portal..."
+    '''
+    return current_app.send_static_file('get_app.html')
